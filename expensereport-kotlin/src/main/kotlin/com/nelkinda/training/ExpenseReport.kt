@@ -9,19 +9,20 @@ enum class ExpenseType {
 class Expense {
     lateinit var type: ExpenseType
     var amount: Int = 0
+
+    fun isMealExpense() =
+        type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST
 }
 
 class ExpenseReport {
     fun printReport(expenses: List<Expense>) {
         var total = 0
-        var mealExpenses = 0
 
         println("Expenses ${Date()}")
 
+        val mealExpenses = expenses.filter { it.isMealExpense() }.sumOf { it.amount }
+
         for (expense in expenses) {
-            if (expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST) {
-                mealExpenses += expense.amount
-            }
             println(getExpenseName(expense) + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense))
 
             total += expense.amount
