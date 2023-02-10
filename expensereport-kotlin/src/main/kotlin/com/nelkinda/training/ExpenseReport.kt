@@ -18,8 +18,8 @@ class ExpenseReport {
     fun printReport(expenses: List<Expense>) {
         println("Expenses ${Date()}")
 
-        val mealExpenses = expenses.filter { it.isMealExpense() }.sumOf { it.amount }
-        val total = expenses.sumOf { it.amount }
+        val mealExpenses = getTotalMealExpense(expenses)
+        val total = getTotalExpense(expenses)
 
         for (expense in expenses) {
             println(getExpenseName(expense) + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense))
@@ -28,6 +28,12 @@ class ExpenseReport {
         println("Meal expenses: $mealExpenses")
         println("Total expenses: $total")
     }
+
+    private fun getTotalMealExpense(expenses: List<Expense>) =
+        expenses.filter { it.isMealExpense() }.sumOf { it.amount }
+
+
+    private fun getTotalExpense(expenses: List<Expense>) = expenses.sumOf { it.amount }
 
     private fun getMealOverExpensesMarker(expense: Expense) =
         if (expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000) "X" else " "
