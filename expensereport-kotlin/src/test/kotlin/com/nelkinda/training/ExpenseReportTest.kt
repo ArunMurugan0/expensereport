@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import java.util.*
 
 class ExpenseReportTest() {
     private val standardOut: PrintStream = System.out;
@@ -36,7 +37,7 @@ class ExpenseReportTest() {
 
         ExpenseReport().printReport(expenses)
 
-        val expectedResult = "Dinner\t1000\t \n" +
+        val expectedResult = "Expenses ${Date()}\n" + "Dinner\t1000\t \n" +
                 "Breakfast\t1000\t \n" +
                 "Car Rental\t1000\t \n" +
                 "Dinner\t6000\tX\n" +
@@ -44,8 +45,7 @@ class ExpenseReportTest() {
                 "Meal expenses: 10000\n" +
                 "Total expenses: 11000\n"
         val actualOutput = outputStreamCaptor.toString()
-        val actualOutputList = actualOutput.split("\n")
-        assertEquals(expectedResult, actualOutputList.subList(1, actualOutputList.size).joinToString("\n"))
+        assertEquals(expectedResult, actualOutput)
     }
 
     @AfterEach
