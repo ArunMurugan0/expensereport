@@ -26,6 +26,58 @@ class ExpenseReportTest() {
     }
 
     @Test
+    fun `It should have a meal limit marker if the Dinner amount is greater than 5000`() {
+        val expenses = listOf<Expense>(
+            createExpense(ExpenseType.DINNER, 5001)
+        )
+
+        ExpenseReport().printReport(expenses)
+
+        val expectedResult = "Expenses ${Date()}\n" + "Dinner\t5001\tX\n" + "Meal expenses: 5001\n" + "Total expenses: 5001\n"
+        val actualOutput = outputStreamCaptor.toString()
+        assertEquals(expectedResult, actualOutput)
+    }
+
+    @Test
+    fun `It should not have a meal limit marker if the Dinner amount is less than or equal to 5000`() {
+        val expenses = listOf<Expense>(
+            createExpense(ExpenseType.DINNER, 5000)
+        )
+
+        ExpenseReport().printReport(expenses)
+
+        val expectedResult = "Expenses ${Date()}\n" + "Dinner\t5000\t \n" + "Meal expenses: 5000\n" + "Total expenses: 5000\n"
+        val actualOutput = outputStreamCaptor.toString()
+        assertEquals(expectedResult, actualOutput)
+    }
+
+    @Test
+    fun `It should not have a meal limit marker if the Breakfast amount is greater than 1000`() {
+        val expenses = listOf<Expense>(
+            createExpense(ExpenseType.BREAKFAST, 1001)
+        )
+
+        ExpenseReport().printReport(expenses)
+
+        val expectedResult = "Expenses ${Date()}\n" + "Breakfast\t1001\tX\n" + "Meal expenses: 1001\n" + "Total expenses: 1001\n"
+        val actualOutput = outputStreamCaptor.toString()
+        assertEquals(expectedResult, actualOutput)
+    }
+
+    @Test
+    fun `It should not have a meal limit marker if the Breakfast amount is less than or equal to 1000`() {
+        val expenses = listOf<Expense>(
+            createExpense(ExpenseType.BREAKFAST, 1000)
+        )
+
+        ExpenseReport().printReport(expenses)
+
+        val expectedResult = "Expenses ${Date()}\n" + "Breakfast\t1000\t \n" + "Meal expenses: 1000\n" + "Total expenses: 1000\n"
+        val actualOutput = outputStreamCaptor.toString()
+        assertEquals(expectedResult, actualOutput)
+    }
+
+    @Test
     fun shouldPrintReport() {
         val expenses = listOf<Expense>(
             createExpense(ExpenseType.DINNER, 1000),
