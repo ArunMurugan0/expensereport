@@ -21,12 +21,18 @@ class ExpenseReport {
         val mealExpenses = getTotalMealExpense(expenses)
         val total = getTotalExpense(expenses)
 
-        for (expense in expenses) {
-            println(getExpenseName(expense) + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense))
-        }
+        printAllExpenseRecords(expenses)
 
         println("Meal expenses: $mealExpenses")
         println("Total expenses: $total")
+    }
+
+    private fun printAllExpenseRecords(expenses: List<Expense>) {
+        expenses.forEach { printExpenseRecord(it) }
+    }
+
+    private fun printExpenseRecord(expense: Expense) {
+        println(getExpenseName(expense) + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense))
     }
 
     private fun getTotalMealExpense(expenses: List<Expense>) =
