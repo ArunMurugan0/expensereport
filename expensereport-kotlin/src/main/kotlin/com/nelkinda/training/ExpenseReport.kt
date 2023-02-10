@@ -16,16 +16,13 @@ class Expense {
 
 class ExpenseReport {
     fun printReport(expenses: List<Expense>) {
-        var total = 0
-
         println("Expenses ${Date()}")
 
         val mealExpenses = expenses.filter { it.isMealExpense() }.sumOf { it.amount }
+        val total = expenses.sumOf { it.amount }
 
         for (expense in expenses) {
             println(getExpenseName(expense) + "\t" + expense.amount + "\t" + getMealOverExpensesMarker(expense))
-
-            total += expense.amount
         }
 
         println("Meal expenses: $mealExpenses")
