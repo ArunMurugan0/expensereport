@@ -12,6 +12,12 @@ class Expense {
 
     fun isMealExpense() =
         type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST
+
+    fun isExpenseOverLimit() = when (type) {
+        ExpenseType.DINNER -> amount >  5000
+        ExpenseType.BREAKFAST -> amount > 1000
+        else -> false
+    }
 }
 
 class ExpenseReport {
@@ -42,7 +48,7 @@ class ExpenseReport {
     private fun getTotalExpense(expenses: List<Expense>) = expenses.sumOf { it.amount }
 
     private fun getMealOverExpensesMarker(expense: Expense) =
-        if (expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000) "X" else " "
+        if (expense.isExpenseOverLimit()) "X" else " "
 
     private fun getExpenseName(expense: Expense) = when (expense.type) {
         ExpenseType.DINNER -> "Dinner"
